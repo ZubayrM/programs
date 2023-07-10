@@ -8,9 +8,13 @@ import com.kemz.programs.model.Detail;
 import com.kemz.programs.model.Program;
 import com.kemz.programs.model.Tool;
 import com.kemz.programs.model.Tool2Program;
+import javassist.NotFoundException;
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -37,8 +41,7 @@ public class HomeService {
         return programRepo.findByDetailId(detailId);
     }
 
-    public List<Tool> getTools(Long programId) {
-
-        return toolRepo.
+    public List<Tool> getTools(Long programId) throws NotFoundException {
+        return new ArrayList<>(programRepo.findById(programId).orElseThrow(()-> new NotFoundException("not")).getTools());
     }
 }

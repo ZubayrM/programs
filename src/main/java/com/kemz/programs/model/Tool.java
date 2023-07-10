@@ -1,11 +1,12 @@
 package com.kemz.programs.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Data
 public class Tool {
 
     @Id
@@ -15,4 +16,7 @@ public class Tool {
     private String name;
 
     private String cipher;
+
+    @ManyToMany(mappedBy = "tools")
+    private Set<Program> programs;
 }

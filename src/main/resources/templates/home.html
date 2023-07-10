@@ -6,5 +6,21 @@
 </head>
 <body>
     <h1 th:text="${msg.text}"></h1>
+<section>
+    <div th:each="detail : ${details}">
+        <a th:href="'home/programs/'+ ${detail.getId()}" th:text="${detail.getName()}"></a>
+        <a th:text="${detail.getCipher()}"></a>
+    </div>
+</section>
+<section>
+    <div th:each="program : ${programs}">
+        <a th:href="'home/tools/' + ${program.getId()}" th:text="${program.getIndex()}"></a>
+    </div>
+</section>
+<section>
+    <div th:each="tool : ${tools}">
+        <label th:text="${tool.getName()}"></label>
+    </div>
+</section>
 </body>
 </html>
