@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить программу</title>
+</head>
+<body>
+<form th:action="@{'/program/add'}" th:method="POST" th:object="${program}">
+    <input type="text" name="userId" th:value="${program.getUserId()}">
+    <input type="text" name="detailId" th:value="${program.getDetailId()}">
+    <input type="text" name="cipher" placeholder="обозначение">
+    <input type="text" name="name" placeholder="наименование">
+    <input type="submit" value="Сохранить">
+</form>
+
+</body>
+</html>

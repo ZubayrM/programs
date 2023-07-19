@@ -9,6 +9,7 @@ import com.kemz.programs.model.Program;
 import com.kemz.programs.model.Tool;
 import com.kemz.programs.model.Tool2Program;
 import javassist.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Service
 public class HomeService {
 
@@ -42,6 +44,15 @@ public class HomeService {
     }
 
     public List<Tool> getTools(Long programId) throws NotFoundException {
-        return new ArrayList<>(programRepo.findById(programId).orElseThrow(()-> new NotFoundException("not")).getTools());
+        ArrayList<Tool> tools =
+                new ArrayList<>(programRepo
+                        .findById(programId).orElseThrow(() -> new NotFoundException("not"))
+                        .getTools());
+        log.info("Список инструментов" + tools.size());
+        return tools;
+    }
+
+    public String getProgram(Long programId) {
+        return programRepo.findById(programId).orElse(new Program()).getCode();
     }
 }

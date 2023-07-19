@@ -1,5 +1,6 @@
 package com.kemz.programs.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,7 +17,8 @@ public class Tool {
     private String name;
 
     private String cipher;
-
-    @ManyToMany(mappedBy = "tools")
-    private Set<Program> programs;
+//
+//    @ManyToMany(mappedBy = "tools")
+//    @JsonIgnore
+//    private Set<Program> programs;
 }

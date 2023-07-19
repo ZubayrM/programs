@@ -4,6 +4,7 @@ import com.kemz.programs.model.Program;
 import com.kemz.programs.service.ProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +21,18 @@ public class ProgramController {
         this.programService = programService;
     }
 
-    @ModelAttribute
+    @ModelAttribute("program")
     public Program program(){
         return new Program();
     }
 
+    @GetMapping("addPage")
+    public String addPage(){
+        return "addProgramPage";
+    }
+
     @PostMapping("add")
-    public String add(Program program){
+    public String add(@ModelAttribute("program") Program program){
         programService.save(program);
         return "redirect:/home";
     };
