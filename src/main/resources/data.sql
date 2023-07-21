@@ -1,8 +1,12 @@
 INSERT INTO User (id, name, pass) VALUES (1, 'test', 'testpass');
 
-INSERT INTO Detail(id, cipher, name) VALUES (1, '0001', 'Болт');
-INSERT INTO Detail(id, cipher, name) VALUES (2, '0002', 'Гайка');
-INSERT INTO Detail(id, cipher, name) VALUES (3, '0003', 'Корпус');
+INSERT INTO Detail(id, cipher, name) VALUES (1, '120.8700.001', 'Болт');
+INSERT INTO Detail(id, cipher, name) VALUES (2, '120.8700.002', 'Гайка');
+INSERT INTO Detail(id, cipher, name) VALUES (3, '120.8700.003', 'Корпус');
+INSERT INTO Detail(id, cipher, name) VALUES (1, '120.8700.004', 'Болт');
+INSERT INTO Detail(id, cipher, name) VALUES (2, '120.8700.005', 'Гайка');
+INSERT INTO Detail(id, cipher, name) VALUES (3, '120.8700.006', 'Корпус');
+
 
 INSERT INTO Program(id, detail_id, index, code) values (1, 1, '010', 'G0 G28 WO. XO.');
 INSERT INTO Program(id, detail_id, index, code) values (2, 1, '020', 'G28 W0. U0.');
