@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,6 +85,12 @@ public class HomeController {
     public String addDetail(String cipher, String name, @ModelAttribute("home_dto") HomeDto homeDto){
         detailService.add(cipher, name);
         homeDto.setDetails(homeService.getAllDetail());
+        return "redirect:/home";
+    }
+
+    @PostMapping("/addImg")
+    public String addImg(@ModelAttribute("img") MultipartFile file){
+
         return "redirect:/home";
     }
 }

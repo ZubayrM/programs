@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить фото</title>
+</head>
+<body>
+<form th:action="@{'/home/addImg'}" enctype="multipart/form-data">
+    <input type="file" name="img" placeholder="img">
+    <input type="submit" value="Сохранить">
+</form>
+</body>
+</html>

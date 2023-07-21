@@ -19,5 +19,5 @@ public class ProgramDto {
 
     private String index;
 
-    private byte[] code;
+    private MultipartFile code;
 }

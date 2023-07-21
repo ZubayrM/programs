@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
@@ -41,7 +39,8 @@ public class ProgramController {
         programService.save(Program.builder()
                 .detailId(program.getDetailId())
                 .index(program.getIndex())
-                .code(new String(program.getCode(), StandardCharsets.UTF_8)).build());
+                .code(new String(program.getCode().getBytes()))
+                .build());
         return "redirect:/home";
     };
 }

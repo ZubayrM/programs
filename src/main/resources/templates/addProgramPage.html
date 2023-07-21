@@ -5,7 +5,7 @@
     <title>Добавить программу</title>
 </head>
 <body>
-<form th:action="@{'/program/add'}" th:method="POST" th:object="${program}">
+<form th:action="@{'/program/add'}" th:method="POST" th:object="${program}" enctype="multipart/form-data">
     <input type="text" name="userId" th:value="*{userId}">
     <input type="text" name="detailId" th:value="*{detailId}">
     <input type="text" name="index" placeholder="номер операции">
