@@ -11,9 +11,11 @@
 <div style="max-width: 1980px;height: 75px;border:1px solid #000; background-color:rgb(17, 59, 122);"><p align="center"><font size="6" color="#ffffff">Архив управляющих программ</font></p></div>
 
 <div id="left">
-    <form>
-        <p><input type="search" name="q" placeholder="Поиск по сайту">
-            <input type="submit" value="Найти"></p>
+    <form action="home/search" th:method="POST">
+        <p>
+            <input type="search" name="text" placeholder="Поиск по сайту">
+            <input type="submit" value="Найти">
+        </p>
     </form>
 </div>
 
@@ -33,7 +35,7 @@
 
     <div class="table table-program2tool">
         <div class="programs" >
-            <a href="program/addPage" class="addProgramPage">+</a>
+            <a href="home/addProgramPage" class="addProgramPage">+</a>
             <div class="tr tr-program" th:each="program : ${home_dto.programs}" >
                 <a th:href="${'home/tools/' + program.getId()}" th:text="${program.getIndex()}">имя программы</a>
                 <a th:attr="download=${program.getIndex()} + '.nc'" th:href="'home/down/program/' + ${program.getId()}">></a>
@@ -52,6 +54,7 @@
 
     <div class="table table-info">
         <p>info</p>
+        <img src="http://localhost:8080/img" alt="no img">
     </div>
 
 </div>

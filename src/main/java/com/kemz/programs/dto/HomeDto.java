@@ -24,4 +24,6 @@ public class HomeDto {
 
     private List<Tool> tools;
 
+    private Long detailActive;
+
 }

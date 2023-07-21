@@ -6,10 +6,10 @@
 </head>
 <body>
 <form th:action="@{'/program/add'}" th:method="POST" th:object="${program}">
-    <input type="text" name="userId" th:value="${program.getUserId()}">
-    <input type="text" name="detailId" th:value="${program.getDetailId()}">
-    <input type="text" name="cipher" placeholder="обозначение">
-    <input type="text" name="name" placeholder="наименование">
+    <input type="text" name="userId" th:value="*{userId}">
+    <input type="text" name="detailId" th:value="*{detailId}">
+    <input type="text" name="index" placeholder="номер операции">
+    <input type="file" name="code" th:value="*{code}" placeholder="программа">
     <input type="submit" value="Сохранить">
 </form>
 

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.File;
 import java.util.Set;
 
 @Entity
@@ -26,8 +27,11 @@ public class Program {
     @Column(name="user_id")
     private Long userId;
 
+    @Column(name = "img_id")
+    private Long imgId;
+
     private String index;
-    
+
     private String code;
 
     @ManyToMany

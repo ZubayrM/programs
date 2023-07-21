@@ -23,11 +23,5 @@ public class DetailController {
         return "addDetailPage";
     }
 
-    @PostMapping("add")
-    public String addDetail(String cipher, String name){
-        detailService.add(cipher, name);
-        return "redirect:/home";
-
-    }
 
 }
