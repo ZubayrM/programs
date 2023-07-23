@@ -15,11 +15,11 @@ public class DetailService {
         this.detailRepo = detailRepo;
     }
 
-    public void add(String cipher, String name) {
-        detailRepo.save(
+    public Long add(String cipher, String name) {
+        return detailRepo.save(
                 Detail.builder()
                         .cipher(cipher)
                         .name(name)
-                        .build());
+                        .build()).getId();
     }
 }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
@@ -25,5 +26,9 @@ public class HomeDto {
     private List<Tool> tools;
 
     private Long detailActive;
+
+    private Long programActive;
+
+    private MultipartFile img;
 
 }

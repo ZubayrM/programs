@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление инструмента</title>
+</head>
+<body>
+<form th:action="@{'/tool'}" th:method="POST">
+
+
+    <input type="text" name="tool_id" placeholder="инструмент" th:value="${tool_dto.getToolActive().getId()}" >
+    <input type="text" name="program_id" placeholder="программа" th:value="${home_dto.getProgramActive()}" >
+    <b th:text="${tool_dto.getToolActive().getName()}"></b>
+    <b th:text="${tool_dto.getToolActive().getCipher()}"></b>
+    <input type="submit" value="сохранить">
+</form>
+<p/>
+<ul>
+    <li th:each="tool: ${tool_dto.getToolList()}">
+        <a th:text="${tool.getName() + ' ' + tool.getCipher()}" th:href="${'/tool/' + tool.getId()}"></a>
+    </li>
+</ul>
+</body>
+</html>

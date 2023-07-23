@@ -5,7 +5,7 @@
     <title>Добавить фото</title>
 </head>
 <body>
-<form th:action="@{'/home/addImg'}" enctype="multipart/form-data">
+<form th:action="@{'/home/addImg'}" th:method="POST" enctype="multipart/form-data">
     <input type="file" name="img" placeholder="img">
     <input type="submit" value="Сохранить">
 </form>

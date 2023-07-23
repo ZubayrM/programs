@@ -32,7 +32,7 @@ public class Program {
     private String code;
 
     @ManyToMany
-    @JoinTable(name = "tool2Program",
+    @JoinTable(name = "toolProgram",
             joinColumns = @JoinColumn(name = "program_id"),
             inverseJoinColumns = @JoinColumn(name = "tool_id"))
     private Set<Tool> tools;

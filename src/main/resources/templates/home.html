@@ -44,6 +44,7 @@
         </div>
         <br><br>
         <div class="tools" >
+            <a href="/tool/addPage" class="addToolPage">+</a>
             <div class="tr tr-tool" th:each="tool : ${home_dto.tools}">
                 <label th:text="${tool.getName()}">имя инструмента</label>
                 <label th:text="${tool.getCipher()}">имя инструмента</label>
@@ -55,7 +56,7 @@
     <div class="table table-info">
         <a href="home/addImagePage">+</a>
         <p>info</p>
-        <img src="http://localhost:8080/img" alt="no img">
+        <img th:src="${'http://localhost:8081/home/img/' + home_dto.getProgramActive()}" alt="no img">
     </div>
 
 </div>

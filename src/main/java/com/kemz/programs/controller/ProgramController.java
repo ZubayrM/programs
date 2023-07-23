@@ -41,6 +41,6 @@ public class ProgramController {
                 .index(program.getIndex())
                 .code(new String(program.getCode().getBytes()))
                 .build());
-        return "redirect:/home";
+        return "redirect:/home/programs/" + program.getDetailId();
     };
 }

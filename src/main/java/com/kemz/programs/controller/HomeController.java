@@ -1,6 +1,8 @@
 package com.kemz.programs.controller;
 
+import com.kemz.programs.Repo.ImageRepo;
 import com.kemz.programs.dto.HomeDto;
+import com.kemz.programs.model.Image;
 import com.kemz.programs.model.Message;
 import com.kemz.programs.model.Program;
 import com.kemz.programs.service.DetailService;
@@ -8,13 +10,15 @@ import com.kemz.programs.service.HomeService;
 import javassist.NotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Log4j2
 @Controller
@@ -24,10 +28,12 @@ public class HomeController {
 
     private final HomeService homeService;
     private final DetailService detailService;
+    private final ImageRepo imageRepo;
 
     @Autowired
-    public HomeController(HomeService homeService, DetailService detailService) {
+    public HomeController(HomeService homeService, DetailService detailService, ImageRepo imageRepo) {
         this.detailService = detailService;
+        this.imageRepo = imageRepo;
         String[] a = new String[]{"1",""};
         this.homeService = homeService;
     }
@@ -57,6 +63,7 @@ public class HomeController {
 
     @GetMapping("tools/{program_id}")
     public String getTools(@PathVariable(name = "program_id") Long programId, @ModelAttribute(name = "home_dto")  HomeDto homeDto) throws NotFoundException {
+        homeDto.setProgramActive(programId);
         homeDto.setTools(homeService.getTools(programId));
         return "redirect:/home";
     }
@@ -83,14 +90,30 @@ public class HomeController {
 
     @PostMapping("addDetail")
     public String addDetail(String cipher, String name, @ModelAttribute("home_dto") HomeDto homeDto){
-        detailService.add(cipher, name);
+        Long detailId = detailService.add(cipher, name);
         homeDto.setDetails(homeService.getAllDetail());
-        return "redirect:/home";
+        return "redirect:/home/programs/" + detailId;
     }
 
     @PostMapping("/addImg")
-    public String addImg(@ModelAttribute("img") MultipartFile file){
-
+    public String addImg(@RequestParam("img") MultipartFile file, @ModelAttribute("home_dto") HomeDto homeDto) throws IOException {
+        imageRepo.save(Image.builder()
+                .img(file.getBytes())
+                .type(file.getContentType())
+                .programId(homeDto.getProgramActive())
+                .build());
         return "redirect:/home";
     }
+
+    @GetMapping("/addImagePage")
+    public String addImgPage(){
+        return "addImagePage";
+    }
+
+    @GetMapping(value = "img/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+    @ResponseBody
+    public byte[] openImg(@PathVariable Long id) throws NotFoundException {
+        return imageRepo.findByProgramId(id).orElseThrow(()-> new NotFoundException("not img")).getImg();
+    }
+
 }
