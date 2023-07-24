@@ -22,30 +22,26 @@
 <div class="conteiner">
 
     <div class="table table-detail">
-        <a href="detail/addPage" class="addDetailPage">+</a>
-        <div class="tr" th:each="detail : ${home_dto.details}">
+        <a href="detail/addPage" class="btn btnAddDetailPage">+</a> <span class="detali">Детали</span>
+        <div class="tr-detail" th:each="detail : ${home_dto.details}">
             <div class="td">
                 <a th:href="'home/programs/' + ${detail.getId()}" th:text="${detail.getCipher()}">chipher</a>
                 <a th:href="'home/programs/' + ${detail.getId()}" th:text="${detail.getName()}">name</a>
-            </div>
-            <div class="td">
             </div>
         </div>
     </div>
 
     <div class="table table-program2tool">
         <div class="programs" >
-            <a href="home/addProgramPage" class="addProgramPage">+</a>
-            <div class="tr tr-program" th:each="program : ${home_dto.programs}" >
+            <a href="home/addProgramPage" class="btn btnAddProgramPage">+</a> <span class="program">Программы</span>
+            <div class="tr-program" th:each="program : ${home_dto.programs}" >
                 <a th:href="${'home/tools/' + program.getId()}" th:text="${program.getIndex()}">имя программы</a>
                 <a th:attr="download=${program.getIndex()} + '.nc'" th:href="'home/down/program/' + ${program.getId()}">></a>
             </div>
-
         </div>
-        <br><br>
         <div class="tools" >
-            <a href="/tool/addPage" class="addToolPage">+</a>
-            <div class="tr tr-tool" th:each="tool : ${home_dto.tools}">
+            <a href="/tool/addPage" class="btn btnAddToolPage">+</a> <span class="tool">Инструменты</span>
+            <div class="tr-tool" th:each="tool : ${home_dto.tools}">
                 <label th:text="${tool.getName()}">имя инструмента</label>
                 <label th:text="${tool.getCipher()}">имя инструмента</label>
             </div>
@@ -54,9 +50,18 @@
 
 
     <div class="table table-info">
-        <a href="home/addImagePage">+</a>
-        <p>info</p>
-        <img th:src="${'http://localhost:8081/home/img/' + home_dto.getProgramActive()}" alt="no img">
+        <a href="home/addImagePage" class="btn btnAddImg">+</a> <span>Эскиз</span>
+        <div class="imgPage">
+            <img th:src="${'http://localhost:8081/home/img/' + home_dto.getProgramActive()}" alt="no img">
+            <p>
+                <a href="#"  class="btn-print">Печать</a>
+                <a href="#"  class="btn-print">Увеличить</a>
+                <a href="#"  class="btn-print">Уменьшить</a>
+                <a href="#"  class="btn-print">Кастрировать</a>
+            </p>
+        </div>
+
+
     </div>
 
 </div>

@@ -7,6 +7,7 @@ import com.kemz.programs.dto.ToolPageDto;
 import com.kemz.programs.model.Program;
 import com.kemz.programs.model.Tool;
 import com.kemz.programs.service.Printer;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -53,22 +54,16 @@ public class ToolController {
     }
 
     @GetMapping("{id}")
-    public String getTool(@PathVariable Long id, @ModelAttribute("tool_dto") ToolPageDto toolPageDto){
-        toolPageDto.setToolActive(toolRepo.findById(id).orElseThrow());
+    public String getTool(@PathVariable Long id, @ModelAttribute("tool_dto") ToolPageDto toolPageDto) throws NotFoundException {
+        toolPageDto.setToolActive(toolRepo.findById(id).orElseThrow(()-> new NotFoundException("нету")));
         return "redirect:/tool/addPage";
     }
 
     @PostMapping
-    public String add(@RequestParam("tool_id") Long toolId, @RequestParam("program_id") Long programId){
-
-        Program program = programRepo.findById(programId).orElseThrow();
-        program.getTools().add(toolRepo.findById(toolId).orElseThrow());
+    public String add(@RequestParam("tool_id") Long toolId, @RequestParam("program_id") Long programId) throws NotFoundException {
+        Program program = programRepo.findById(programId).orElseThrow(()-> new NotFoundException("нету"));
+        program.getTools().add(toolRepo.findById(toolId).orElseThrow(()-> new NotFoundException("нету")));
         programRepo.save(program);
-
-//        tool2ProgramRepo.save(Tool2Program.builder()
-//                .programId(programId)
-//                .toolId(toolId)
-//                .build());
         return "redirect:/home/tools/" + programId;
     }
 

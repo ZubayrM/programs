@@ -2,6 +2,7 @@ package com.kemz.programs.controller;
 
 import com.kemz.programs.model.Image;
 import com.kemz.programs.service.ImgService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class ImgController {
 
     @GetMapping("img/{id}")
     @ResponseBody
-    public ResponseEntity img(@PathVariable("id") Long id) throws IOException {
+    public ResponseEntity img(@PathVariable("id") Long id) throws IOException, NotFoundException {
         Image image = imgService.get(id);
         return ResponseEntity.ok().contentType(MediaType.valueOf(image.getType())).body(image.getImg());
     }
