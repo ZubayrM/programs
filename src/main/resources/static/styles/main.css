@@ -75,6 +75,9 @@
 }
 
 .tr-program{
+  display: flex;
+  justify-content: space-between;
+
   border: 2px solid white;
   margin: 4px 2px 8px;
   border-radius: 14px;
@@ -94,6 +97,7 @@
 }
 
 .tr-detail a{
+
   text-decoration: none;
   color: black;
 }
@@ -161,4 +165,9 @@ span{
   padding: 4px 16px;
   border-radius: 6px;
   margin: 2px;
+}
+
+.type-span{
+  color: whitesmoke;
+  font-size: 14px;
 }

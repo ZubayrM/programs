@@ -17,4 +17,6 @@ public class ToolPageDto {
     private Tool toolActive;
 
     private List<Tool> toolList;
+
+    private List<Tool> newPack;
 }

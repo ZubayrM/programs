@@ -35,8 +35,11 @@
         <div class="programs" >
             <a href="home/addProgramPage" class="btn btnAddProgramPage">+</a> <span class="program">Программы</span>
             <div class="tr-program" th:each="program : ${home_dto.programs}" >
-                <a th:href="${'home/tools/' + program.getId()}" th:text="${program.getIndex()}">имя программы</a>
-                <a th:attr="download=${program.getIndex()} + '.nc'" th:href="'home/down/program/' + ${program.getId()}">></a>
+                <div>
+                    <a th:href="${'home/tools/' + program.getId()}" th:text="${program.getIndex()}">имя программы</a>
+                    <a th:attr="download=${program.getIndex()} + '.nc'" th:href="'home/down/program/' + ${program.getId()}">></a>
+                </div>
+                <span class="type-span" th:text="${program.type}"></span>
             </div>
         </div>
         <div class="tools" >

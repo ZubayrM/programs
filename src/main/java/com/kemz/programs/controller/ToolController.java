@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.print.PrintException;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("tool")
@@ -43,7 +44,9 @@ public class ToolController {
     public ToolPageDto toolDto(){
         return ToolPageDto.builder()
                 .toolActive(Tool.builder().name("").cipher("").build())
-                .toolList(toolRepo.findAll()).build();
+                .toolList(toolRepo.findAll())
+                .newPack(new ArrayList<>())
+                .build();
     };
 
 
@@ -56,14 +59,16 @@ public class ToolController {
     @GetMapping("{id}")
     public String getTool(@PathVariable Long id, @ModelAttribute("tool_dto") ToolPageDto toolPageDto) throws NotFoundException {
         toolPageDto.setToolActive(toolRepo.findById(id).orElseThrow(()-> new NotFoundException("нету")));
+        toolPageDto.getNewPack().add(toolRepo.findById(id).orElseThrow(()-> new NotFoundException("нету")));
         return "redirect:/tool/addPage";
     }
 
     @PostMapping
-    public String add(@RequestParam("tool_id") Long toolId, @RequestParam("program_id") Long programId) throws NotFoundException {
+    public String add(@ModelAttribute("tool_dto") ToolPageDto toolPageDto, @RequestParam("program_id") Long programId) throws NotFoundException {
         Program program = programRepo.findById(programId).orElseThrow(()-> new NotFoundException("нету"));
-        program.getTools().add(toolRepo.findById(toolId).orElseThrow(()-> new NotFoundException("нету")));
+        program.getTools().addAll(toolPageDto.getNewPack());
         programRepo.save(program);
+        toolPageDto.setNewPack(new ArrayList<>());
         return "redirect:/home/tools/" + programId;
     }
 

@@ -20,4 +20,6 @@ public class ProgramDto {
     private String index;
 
     private MultipartFile code;
+
+    private String type;
 }

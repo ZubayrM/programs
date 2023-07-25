@@ -8,8 +8,8 @@ INSERT INTO Detail(id, cipher, name) VALUES (5, '120.8700.005', 'Гайка');
 INSERT INTO Detail(id, cipher, name) VALUES (6, '120.8700.006', 'Корпус');
 
 
-INSERT INTO Program(id, detail_id, index, code) values (1, 1, '010', 'G0 G28 WO. XO.');
-INSERT INTO Program(id, detail_id, index, code) values (2, 1, '020', 'G28 W0. U0.');
+INSERT INTO Program(id, detail_id, index, code, type) values (1, 1, '010', 'G0 G28 WO. XO.', 'токарная');
+INSERT INTO Program(id, detail_id, index, code, type) values (2, 1, '020', 'G28 W0. U0.', 'фрезерная');
 
 INSERT INTO Tool(id, name, cipher) values (1, 'Сверло', 'СТЦ 512 6х8х26х6 HF AlTin');
 INSERT INTO Tool(id, name, cipher) values (2, 'Сверло', 'СТЦ 512 8х8х26х8 HF AlTin');

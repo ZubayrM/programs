@@ -6,12 +6,12 @@
 </head>
 <body>
 <form th:action="@{'/tool'}" th:method="POST">
-
-
-    <input type="text" name="tool_id" placeholder="инструмент" th:value="${tool_dto.getToolActive().getId()}" >
     <input type="text" name="program_id" placeholder="программа" th:value="${home_dto.getProgramActive()}" >
-    <b th:text="${tool_dto.getToolActive().getName()}"></b>
-    <b th:text="${tool_dto.getToolActive().getCipher()}"></b>
+    <div th:each="tool : ${tool_dto.getNewPack()}">
+        <b th:text="${tool.getName()}"></b>
+        <b th:text="${tool.getCipher()}"></b>
+    </div>
+
     <input type="submit" value="сохранить">
 </form>
 <p/>

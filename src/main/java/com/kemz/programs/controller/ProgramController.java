@@ -40,6 +40,7 @@ public class ProgramController {
                 .detailId(program.getDetailId())
                 .index(program.getIndex())
                 .code(new String(program.getCode().getBytes()))
+                .type(program.getType())
                 .build());
         return "redirect:/home/programs/" + program.getDetailId();
     };

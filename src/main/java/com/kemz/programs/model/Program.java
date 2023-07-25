@@ -31,6 +31,8 @@ public class Program {
 
     private String code;
 
+    private String type;
+
     @ManyToMany
     @JoinTable(name = "toolProgram",
             joinColumns = @JoinColumn(name = "program_id"),
