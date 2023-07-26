@@ -6,8 +6,7 @@ import com.kemz.programs.dto.HomeDto;
 import com.kemz.programs.dto.ToolPageDto;
 import com.kemz.programs.model.Program;
 import com.kemz.programs.model.Tool;
-import com.kemz.programs.service.Printer;
-import javassist.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,26 +17,11 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping("tool")
 @SessionAttributes({"tool_dto", "home_dto"})
+@RequiredArgsConstructor
 public class ToolController {
 
-
-
     private final ToolRepo toolRepo;
-    //private final Tool2ProgramRepo tool2ProgramRepo;
     private final ProgramRepo programRepo;
-
-
-    @Autowired
-    public ToolController(ToolRepo toolRepo,
-                          //Tool2ProgramRepo tool2ProgramRepo,
-                          ProgramRepo programRepo) throws PrintException {
-        this.toolRepo = toolRepo;
-        //this.tool2ProgramRepo = tool2ProgramRepo;
-        this.programRepo = programRepo;
-
-
-
-    }
 
 
     @ModelAttribute("tool_dto")
@@ -57,15 +41,15 @@ public class ToolController {
     }
 
     @GetMapping("{id}")
-    public String getTool(@PathVariable Long id, @ModelAttribute("tool_dto") ToolPageDto toolPageDto) throws NotFoundException {
-        toolPageDto.setToolActive(toolRepo.findById(id).orElseThrow(()-> new NotFoundException("нету")));
-        toolPageDto.getNewPack().add(toolRepo.findById(id).orElseThrow(()-> new NotFoundException("нету")));
+    public String getTool(@PathVariable Long id, @ModelAttribute("tool_dto") ToolPageDto toolPageDto) {
+        toolPageDto.setToolActive(toolRepo.findById(id).orElseThrow());
+        toolPageDto.getNewPack().add(toolRepo.findById(id).orElseThrow());
         return "redirect:/tool/addPage";
     }
 
     @PostMapping
-    public String add(@ModelAttribute("tool_dto") ToolPageDto toolPageDto, @RequestParam("program_id") Long programId) throws NotFoundException {
-        Program program = programRepo.findById(programId).orElseThrow(()-> new NotFoundException("нету"));
+    public String add(@ModelAttribute("tool_dto") ToolPageDto toolPageDto, @RequestParam("program_id") Long programId) {
+        Program program = programRepo.findById(programId).orElseThrow();
         program.getTools().addAll(toolPageDto.getNewPack());
         programRepo.save(program);
         toolPageDto.setNewPack(new ArrayList<>());
@@ -73,8 +57,7 @@ public class ToolController {
     }
 
     public String print(){
-
-
+        //todo когда нибудь я доделаю этот метот
         return "redirect:/home";
     }
 

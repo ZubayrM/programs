@@ -2,7 +2,6 @@ package com.kemz.programs.service;
 
 import com.kemz.programs.Repo.ImageRepo;
 import com.kemz.programs.model.Image;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,7 @@ public class ImgService {
         this.imageRepo = imageRepo;
     }
 
-    public Image get(Long id) throws NotFoundException {
-        return imageRepo.findById(id).orElseThrow(()-> new NotFoundException("нету"));
+    public Image get(Long id) {
+        return imageRepo.findById(id).orElseThrow();
     }
 }

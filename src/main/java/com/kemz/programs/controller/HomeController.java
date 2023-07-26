@@ -7,18 +7,15 @@ import com.kemz.programs.model.Message;
 import com.kemz.programs.model.Program;
 import com.kemz.programs.service.DetailService;
 import com.kemz.programs.service.HomeService;
-import javassist.NotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 @Log4j2
 @Controller
@@ -62,7 +59,7 @@ public class HomeController {
     }
 
     @GetMapping("tools/{program_id}")
-    public String getTools(@PathVariable(name = "program_id") Long programId, @ModelAttribute(name = "home_dto")  HomeDto homeDto) throws NotFoundException {
+    public String getTools(@PathVariable(name = "program_id") Long programId, @ModelAttribute(name = "home_dto")  HomeDto homeDto){
         homeDto.setProgramActive(programId);
         homeDto.setTools(homeService.getTools(programId));
         return "redirect:/home";
@@ -112,8 +109,8 @@ public class HomeController {
 
     @GetMapping(value = "img/{id}", produces = MediaType.IMAGE_PNG_VALUE)
     @ResponseBody
-    public byte[] openImg(@PathVariable Long id) throws NotFoundException {
-        return imageRepo.findByProgramId(id).orElseThrow(()-> new NotFoundException("not img")).getImg();
+    public byte[] openImg(@PathVariable Long id) {
+        return imageRepo.findByProgramId(id).orElseThrow().getImg();
     }
 
 }

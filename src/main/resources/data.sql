@@ -1,4 +1,10 @@
-INSERT INTO User (id, name, pass) VALUES (1, 'test', 'testpass');
+
+
+INSERT INTO Usr(id, name, pass) VALUES (1, 'test', '$2a$12$Ak.P17GxP2yyzEVEZ33vmewZhDTq3L8TLgmG6hXmjCaLFGVq2vVoy');
+
+INSERT INTO Role(id, name) VALUES (1, 'role_user');
+
+INSERT INTO Usr_role values (1, 1);
 
 INSERT INTO Detail(id, cipher, name) VALUES (1, '120.8700.001', 'Болт');
 INSERT INTO Detail(id, cipher, name) VALUES (2, '120.8700.002', 'Гайка');
