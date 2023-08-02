@@ -31,4 +31,6 @@ public class HomeDto {
 
     private MultipartFile img;
 
+    private byte[] imgByte;
+
 }

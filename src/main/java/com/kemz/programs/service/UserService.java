@@ -35,6 +35,5 @@ public class UserService implements UserDetailsService {
                 request.getName(),
                 request.getPass(),
                 request.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList()));
-
     }
 }

@@ -7,13 +7,16 @@ import com.kemz.programs.model.Message;
 import com.kemz.programs.model.Program;
 import com.kemz.programs.service.DetailService;
 import com.kemz.programs.service.HomeService;
+import com.kemz.programs.service.Printer;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -55,6 +58,7 @@ public class HomeController {
         homeDto.setDetailActive(detailId);
         homeDto.setPrograms(homeService.getPrograms(detailId));
         homeDto.setTools(new ArrayList<>());
+
         return "redirect:/home";
     }
 
@@ -62,6 +66,12 @@ public class HomeController {
     public String getTools(@PathVariable(name = "program_id") Long programId, @ModelAttribute(name = "home_dto")  HomeDto homeDto){
         homeDto.setProgramActive(programId);
         homeDto.setTools(homeService.getTools(programId));
+        try {
+            homeDto.setImgByte(imageRepo.findByProgramId(programId).orElseThrow().getImg());
+        } catch (Exception e){
+
+        }
+
         return "redirect:/home";
     }
 
@@ -110,7 +120,25 @@ public class HomeController {
     @GetMapping(value = "img/{id}", produces = MediaType.IMAGE_PNG_VALUE)
     @ResponseBody
     public byte[] openImg(@PathVariable Long id) {
-        return imageRepo.findByProgramId(id).orElseThrow().getImg();
+        byte[] img;
+        try {
+            img = imageRepo.findByProgramId(id).orElseThrow().getImg();
+        } catch (Exception e){
+            img = new byte[0];
+        }
+        return img;
+    }
+
+    @GetMapping("/print")
+    public String printImg(@ModelAttribute(name = "home_dto") HomeDto dto){
+        log.info(String.format("Размер фото: %s",dto.getImgByte().length));
+        try {
+            Printer.pull(new ByteArrayInputStream(dto.getImgByte()));
+        } catch (Exception e){
+            log.info(String.format("Печать не пошла потому что %S", e.getMessage()));
+        }
+
+        return "redirect:/home";
     }
 
 }
