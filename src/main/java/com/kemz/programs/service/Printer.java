@@ -7,6 +7,7 @@ import javax.print.*;
 import javax.print.attribute.*;
 import javax.print.attribute.standard.MediaSizeName;
 import java.io.ByteArrayInputStream;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -22,17 +23,25 @@ public abstract class Printer {
     static {
         printService = PrintServiceLookup.lookupDefaultPrintService();
         printJob = printService.createPrintJob();
-        docFlavor = DocFlavor.INPUT_STREAM.PNG;
+
         docAttributeSet = new HashDocAttributeSet();
 
         printRequestAttribute = new HashPrintRequestAttributeSet();
         printRequestAttribute.add(MediaSizeName.ISO_A4);
-
     }
 
-    public static void pull(ByteArrayInputStream html) throws PrintException {
+    public static void printImg(ByteArrayInputStream html) throws PrintException {
+        docFlavor = DocFlavor.INPUT_STREAM.PNG;
+
         doc = new SimpleDoc(html, docFlavor, docAttributeSet);
         printJob.print(doc, printRequestAttribute);
+    }
+
+    public static void printTools(String fileName, Map<String, Object> data){
+        docFlavor = DocFlavor.INPUT_STREAM.TEXT_HTML_HOST;
+
+        
+
     }
 
 }

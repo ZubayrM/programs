@@ -11,13 +11,13 @@ import com.kemz.programs.service.Printer;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 
 @Log4j2
@@ -49,7 +49,8 @@ public class HomeController {
     }
 
     @GetMapping
-    public String home(){
+    public String home(Principal principal, @ModelAttribute("home_dto") HomeDto homeDto){
+        homeDto.setAuth(principal != null);
         return "home";
     }
 
@@ -98,17 +99,19 @@ public class HomeController {
     @PostMapping("addDetail")
     public String addDetail(String cipher, String name, @ModelAttribute("home_dto") HomeDto homeDto){
         Long detailId = detailService.add(cipher, name);
+        log.info(String.format("add detail: id- %d name- %s cipher- %s", detailId, name, cipher));
         homeDto.setDetails(homeService.getAllDetail());
         return "redirect:/home/programs/" + detailId;
     }
 
     @PostMapping("/addImg")
     public String addImg(@RequestParam("img") MultipartFile file, @ModelAttribute("home_dto") HomeDto homeDto) throws IOException {
-        imageRepo.save(Image.builder()
+        Image image = imageRepo.save(Image.builder()
                 .img(file.getBytes())
                 .type(file.getContentType())
                 .programId(homeDto.getProgramActive())
                 .build());
+        homeDto.setImgByte(image.getImg());
         return "redirect:/home";
     }
 
@@ -133,7 +136,7 @@ public class HomeController {
     public String printImg(@ModelAttribute(name = "home_dto") HomeDto dto){
         log.info(String.format("Размер фото: %s",dto.getImgByte().length));
         try {
-            Printer.pull(new ByteArrayInputStream(dto.getImgByte()));
+            Printer.printImg(new ByteArrayInputStream(dto.getImgByte()));
         } catch (Exception e){
             log.info(String.format("Печать не пошла потому что %S", e.getMessage()));
         }

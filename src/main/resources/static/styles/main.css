@@ -124,9 +124,8 @@
 
 .btnAddToolPage{
   background-color: whitesmoke;
-  border: 2px solid #0a588d;
+  border: 1px solid #0a588d;
   color: #0a588d;
-  font-size: 14px;
 }
 .btnAddProgramPage{
   background-color: #0a588d;
@@ -170,4 +169,12 @@ span{
 .type-span{
   color: whitesmoke;
   font-size: 14px;
+}
+
+.span-h2{
+  margin: 2px;
+  border-left: solid 30px rgb(17, 59, 122);
+  border-top: solid 2px rgb(17, 59, 122);
+  border-radius: 8px;
+  padding: 2px;
 }

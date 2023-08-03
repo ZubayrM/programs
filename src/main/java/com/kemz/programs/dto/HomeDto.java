@@ -33,4 +33,6 @@ public class HomeDto {
 
     private byte[] imgByte;
 
+    private boolean auth;
+
 }
