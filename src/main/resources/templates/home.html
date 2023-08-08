@@ -8,6 +8,7 @@
     <link rel='stylesheet' type='text/css' media='screen' th:href='@{styles/main.css}'>
 </head>
 <body style="margin: 0px;">
+<a href="auth">Вход</a>
 <div style="max-width: 1980px;height: 75px;border:1px solid #000; background-color:rgb(17, 59, 122);"><p align="center"><font size="6" color="#ffffff">Архив управляющих программ</font></p></div>
 
 <div id="left">
@@ -37,7 +38,7 @@
     </div>
 
     <div class="table table-program2tool">
-        <div class="programs" >
+        <div class="programs" th:if="${home_dto.programs.size > 0 || home_dto.auth}">
             <span class="program span-h2">Программы</span>
             <a href="home/addProgramPage" class="btn btnAddProgramPage" th:if="${home_dto.auth}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="16" fill="currentColor" class="bi bi-node-plus-fill" viewBox="0 0 13 13">
@@ -56,7 +57,8 @@
                 <span class="type-span" th:text="${program.type}"></span>
             </div>
         </div>
-        <div class="tools" >
+
+        <div class="tools" th:if="${home_dto.tools.size > 0 || home_dto.auth}">
             <span class="tool span-h2">Инструменты</span>
             <a href="/tool/addPage" class="btn btnAddToolPage" th:if="${home_dto.auth}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="16" fill="currentColor" class="bi bi-node-plus-fill" viewBox="0 0 13 13">
@@ -68,7 +70,7 @@
                 <label th:text="${tool.getCipher()}">имя инструмента</label>
             </div>
             <div>
-                <a href="/print/tool" class="btn-print">
+                <a th:href="@{'home/printTools'}" class="btn-print">
                     <span class="type-span">Печать</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 14 14">
                         <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
@@ -78,6 +80,7 @@
 
             </div>
         </div>
+
     </div>
 
 

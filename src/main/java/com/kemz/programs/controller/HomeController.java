@@ -5,6 +5,7 @@ import com.kemz.programs.dto.HomeDto;
 import com.kemz.programs.model.Image;
 import com.kemz.programs.model.Message;
 import com.kemz.programs.model.Program;
+import com.kemz.programs.model.Tool;
 import com.kemz.programs.service.DetailService;
 import com.kemz.programs.service.HomeService;
 import com.kemz.programs.service.Printer;
@@ -19,6 +20,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Log4j2
 @Controller
@@ -45,7 +48,11 @@ public class HomeController {
 
     @ModelAttribute("home_dto")
     public HomeDto homeDto(){
-        return HomeDto.builder().details(homeService.getAllDetail()).build();
+        return HomeDto.builder()
+                .details(homeService.getAllDetail())
+                .programs(new ArrayList<Program>())
+                .tools(new ArrayList<Tool>())
+                .build();
     }
 
     @GetMapping
@@ -141,6 +148,16 @@ public class HomeController {
             log.info(String.format("Печать не пошла потому что %S", e.getMessage()));
         }
 
+        return "redirect:/home";
+    }
+
+    @GetMapping("/printTools")
+    public String printHtml(){
+        Map<String,Object> map = new HashMap();
+        map.put("Фреза", "8x8x20");
+        map.put("Сверло", "8x8x20");
+        map.put("Центровка", "8x8x20");
+        Printer.printTools("toolList.html",map);
         return "redirect:/home";
     }
 
