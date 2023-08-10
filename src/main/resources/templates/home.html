@@ -101,7 +101,7 @@
         </div>
 
         <div class="imgPage">
-            <img th:src="${'http://localhost:8081/home/img/' + home_dto.getProgramActive()}" alt="no img">
+            <img th:src="${home_dto.getUrlImg() + '/' + home_dto.getProgramActive()}" alt="no img">
             <p>
                 <a href="home/print"  class="btn-print">
                     <span>Печать</span>

@@ -60,7 +60,7 @@ public abstract class Printer {
             docFlavor = DocFlavor.STRING.TEXT_HTML;
             doc = new SimpleDoc(document.outerHtml(), docFlavor, docAttributeSet);
 
-            //printJob.print(doc, printRequestAttribute);
+            printJob.print(doc, printRequestAttribute);
 
         } catch (Exception e){
             log.info("Тут вместо печати инструментов " + e.getMessage());

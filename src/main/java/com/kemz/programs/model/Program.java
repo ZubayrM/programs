@@ -27,6 +27,7 @@ public class Program {
 
     private String index;
 
+    @Lob
     private String code;
 
     private String type;

@@ -11,6 +11,8 @@ import com.kemz.programs.service.HomeService;
 import com.kemz.programs.service.Printer;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +30,11 @@ import java.util.TreeMap;
 @Controller
 @RequestMapping("home")
 @SessionAttributes("home_dto")
+@ConfigurationPropertiesScan
 public class HomeController {
+
+    @Value("${url-img}")
+    private String URL_IMG;
 
     private final HomeService homeService;
     private final DetailService detailService;
@@ -53,6 +59,7 @@ public class HomeController {
                 .details(homeService.getAllDetail())
                 .programs(new ArrayList<Program>())
                 .tools(new ArrayList<Tool>())
+                .urlImg(URL_IMG)
                 .build();
     }
 

@@ -35,4 +35,6 @@ public class HomeDto {
 
     private boolean auth;
 
+    private String urlImg;
+
 }
