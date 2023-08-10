@@ -22,6 +22,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Log4j2
 @Controller
@@ -152,11 +153,10 @@ public class HomeController {
     }
 
     @GetMapping("/printTools")
-    public String printHtml(){
-        Map<String,Object> map = new HashMap();
-        map.put("Фреза", "8x8x20");
-        map.put("Сверло", "8x8x20");
-        map.put("Центровка", "8x8x20");
+    public String printHtml( @ModelAttribute("home_dto") HomeDto homeDto){
+        Map<String,Object> map = new TreeMap<>();
+        homeDto.getTools().forEach(tool ->
+            map.put(tool.getCipher(), tool.getName()));
         Printer.printTools("toolList.html",map);
         return "redirect:/home";
     }

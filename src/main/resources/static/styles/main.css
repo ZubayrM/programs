@@ -178,3 +178,11 @@ span{
   border-radius: 8px;
   padding: 2px;
 }
+
+.btn-down-prog{
+  border: 1px white solid;
+  border-radius: 4px;
+
+  font-size: 12px;
+  padding: 2px;
+}

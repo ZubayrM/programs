@@ -46,25 +46,27 @@ public abstract class Printer {
     }
 
     public static void printTools(String fileName, Map<String, Object> data){
-        docFlavor = DocFlavor.INPUT_STREAM.TEXT_HTML_HOST;
         Document document;
         try {
-             document = Jsoup.parse(new File(PATH + fileName));
-            Element name = document.getElementById("table");
+            document = Jsoup.parse(new File(PATH + fileName));
+            Element table = document.getElementById("table");
 
+            if (table!=null)
             data.forEach((e, k)-> {
-                name.appendElement(String.format("<rt> <td> %s </td> <td> %s </td> </tr>",e, k.toString()));
-
+                table.appendElement("tr").append(String.format("<td> %s </td> <td> %s </td>",e, k.toString()));
             });
-
-
-
             log.info(document.outerHtml());
+
+            docFlavor = DocFlavor.STRING.TEXT_HTML;
+            doc = new SimpleDoc(document.outerHtml(), docFlavor, docAttributeSet);
+
+            //printJob.print(doc, printRequestAttribute);
+
         } catch (Exception e){
             log.info("Тут вместо печати инструментов " + e.getMessage());
         }
 
-        log.info("lol");
+
 
 
     }
