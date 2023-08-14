@@ -1,5 +1,6 @@
 package com.kemz.programs.service;
 
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -56,6 +57,11 @@ public abstract class Printer {
                 table.appendElement("tr").append(String.format("<td> %s </td> <td> %s </td>",e, k.toString()));
             });
             log.info(document.outerHtml());
+
+
+            PdfRendererBuilder builder = new PdfRendererBuilder();
+
+
 
             docFlavor = DocFlavor.STRING.TEXT_HTML;
             doc = new SimpleDoc(document.outerHtml(), docFlavor, docAttributeSet);

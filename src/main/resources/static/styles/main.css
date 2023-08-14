@@ -24,9 +24,11 @@
   padding-top: 10px;
   background-color: whitesmoke;
   flex-basis: 30%;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   text-decoration: none; /* Убираем подчёркивание */
   display: block;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .table-program2tool{
@@ -65,10 +67,11 @@
 }
 
 .tr-detail{
+  display: block;
   background-color: snow;
   margin: 6px 18px 8px 4px;
   font-size: 18px;
-  box-shadow: 1px 1px 6px 1px black ;
+  box-shadow: 1px 1px 4px 1px #504f4f;
   border-bottom-right-radius: 9px;
   border-top-right-radius: 9px;
   padding: 6px;
@@ -79,7 +82,7 @@
   justify-content: space-between;
 
   border: 2px solid white;
-  margin: 4px 2px 8px;
+  margin: 4px 12px;
   border-radius: 14px;
   padding: 3px 20px;
   background-color: #0a588d;
@@ -186,3 +189,26 @@ span{
   font-size: 12px;
   padding: 2px;
 }
+
+/*.tr-detail:hover{*/
+/*  background-color: #0a588d;*/
+/*  color: white;*/
+/*}*/
+
+.tr-detail:focus{
+  background-color: #0a588d;
+}
+
+.active-detail{
+  /*box-shadow: 1px 1px 6px 1px #0a588d;*/
+  /*border: solid 1px #0a588d;*/
+  /*font-size: 1.2em;*/
+  background-color: #badff8;
+}
+
+.program-active{
+  box-shadow: 0px 0px 1px 2px #0a588d;
+  margin-right: 3px;
+  margin-left: 3px;
+}
+
