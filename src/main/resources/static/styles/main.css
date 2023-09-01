@@ -12,6 +12,7 @@
   background-color: aqua;
 }
 
+
 .conteiner{
   display: flex;
   flex-direction: row;
@@ -23,8 +24,9 @@
 .table-detail{
   padding-top: 10px;
   background-color: whitesmoke;
-  flex-basis: 30%;
-  /*white-space: nowrap;*/
+  flex-basis: 18%;
+  min-width: 200px;
+  white-space: nowrap;
   text-decoration: none; /* Убираем подчёркивание */
   display: block;
   flex-direction: column;
@@ -32,7 +34,11 @@
 }
 
 .table-program2tool{
-  flex-basis: 25%;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 37%;
+  height: 100vh;
+  width: 30vh;
   background-color: whitesmoke;
 }
 
@@ -46,11 +52,19 @@
   background-color: whitesmoke;
   padding-bottom: 40px;
   padding-top: 20px;
+  height: 50%;
 }
 
 .tools{
   background-color: whitesmoke;
 }
+.tools-list{
+  display: block;
+  height: 80%;
+  overflow-y: scroll;
+}
+
+
 .li{
   display: inline-block;
 }
@@ -66,10 +80,17 @@
 
 }
 
+.detail-list{
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 100%;
+}
+
 .tr-detail{
   display: block;
   background-color: snow;
-  margin: 6px 18px 8px 4px;
+  margin: 2px 18px 2px 0;
   font-size: 18px;
   box-shadow: 1px 1px 4px 1px #504f4f;
   border-bottom-right-radius: 9px;
@@ -79,14 +100,110 @@
 
 .tr-program{
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 2px 10px;
+
+
+}
+
+.td-program{
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
 
-  border: 2px solid white;
-  margin: 4px 12px;
+  width: 100%;
+
+
+
+}
+
+.td-program-child{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 2px;
   border-radius: 14px;
-  padding: 3px 20px;
+
+
+}
+
+.td-program-function{
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  padding: 0 2px;
+  font-size: 14px;
+
+
+}
+
+/*@keyframes function-anime {*/
+/*  from {*/
+/*    background: linear-gradient(#0a588d, #0a588d);*/
+/*  }*/
+/*  to{*/
+/*    background: linear-gradient(#0a588d, #badff8);*/
+/*  }*/
+/*}*/
+
+.td-program-function-con{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  padding: 2px 20px;
+  background: linear-gradient(#0a588d, #043658);
+
+  color: #f8f8f8;
+
+  /*animation-duration: 3s;*/
+  /*animation-name: function-anime;*/
+}
+
+.td-program-child-e{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100vh;
+  padding: 4px 8px;
   background-color: #0a588d;
   font-size: 18px;
+
+  border-radius: 14px;
+}
+
+.td-program-a {
+  width: 100%;
+}
+.td-program-a a{
+  display: block;
+  width: 100%;
+}
+
+.td-program-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+  border: 2px solid white;
+  border-radius: 20px;
+  padding: 2px;
+  margin: 2px;
+
+  font-size: 18px;
+}
+
+.program-att{
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
 }
 
 .tr-tool{
@@ -182,13 +299,6 @@ span{
   padding: 2px;
 }
 
-.btn-down-prog{
-  border: 1px white solid;
-  border-radius: 4px;
-
-  font-size: 12px;
-  padding: 2px;
-}
 
 /*.tr-detail:hover{*/
 /*  background-color: #0a588d;*/
@@ -203,12 +313,24 @@ span{
   /*box-shadow: 1px 1px 6px 1px #0a588d;*/
   /*border: solid 1px #0a588d;*/
   /*font-size: 1.2em;*/
-  background-color: #badff8;
+  background: linear-gradient( #0a588d, #043658);
+}
+
+.active-detail .td a{
+  color: whitesmoke;
 }
 
 .program-active{
-  box-shadow: 0px 0px 1px 2px #0a588d;
-  margin-right: 3px;
-  margin-left: 3px;
+  /*box-shadow: 0px 0px 1px 2px #0a588d;*/
+  /*border-radius: 15px;*/
+  padding-bottom: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.list-programs{
+  display: block;
+  height: 45vh;
+  overflow-y: scroll;
 }
 
