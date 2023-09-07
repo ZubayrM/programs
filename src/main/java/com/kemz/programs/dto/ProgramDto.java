@@ -1,6 +1,7 @@
 package com.kemz.programs.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +20,12 @@ public class ProgramDto {
 
     private String index;
 
-    private MultipartFile code;
+    @JsonProperty("code-fanuc")
+    private MultipartFile codeFanuc;
+    @JsonProperty("code-haas")
+    private MultipartFile codeHaas;
+    @JsonProperty("code-h")
+    private MultipartFile codeH;
 
     private String type;
 }

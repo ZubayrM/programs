@@ -1,0 +1,46 @@
+.no-vis{
+    visibility: collapse;
+}
+
+body{
+    display: flex;
+    background-color: #e4e5e5;
+    justify-content: center;
+    align-items: center;
+
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    max-height: 450px;
+    max-width: 350px;
+    background-color: white;
+
+    padding: 10px;
+
+    border-radius: 8px;
+    box-shadow: 0 0 5px 2px #043658;
+    margin-top: 30px;
+
+}
+
+.f-col{
+    padding: 8px;
+}
+
+.h2{
+    display: flex;
+    justify-content: center;
+    color: #043658;
+}
+
+.file{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+label{
+    padding-right: 5px;
+}

@@ -28,7 +28,13 @@ public class Program {
     private String index;
 
     @Lob
-    private String code;
+    private String codeFanuc;
+
+    @Lob
+    private String codeHaas;
+
+    @Lob
+    private String codeH;
 
     private String type;
 

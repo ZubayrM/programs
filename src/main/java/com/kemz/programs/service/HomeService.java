@@ -8,6 +8,8 @@ import com.kemz.programs.model.Program;
 import com.kemz.programs.model.Tool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,10 +48,14 @@ public class HomeService {
     }
 
     public String getProgram(Long programId) {
-        return programRepo.findById(programId).orElse(new Program()).getCode();
+        return programRepo.findById(programId).orElse(new Program()).getCodeHaas();
     }
 
     public List<Detail> getDetailBySearch(String text) {
         return detailRepo.findByNameContainingIgnoreCaseOrCipherContainingIgnoreCase(text, text);
+    }
+
+    public Page<Detail> getDetails(PageRequest of) {
+        return detailRepo.findAll(of);
     }
 }

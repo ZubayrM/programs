@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Objects;
 
 @Slf4j
 @Controller
@@ -39,7 +40,9 @@ public class ProgramController {
         programService.save(Program.builder()
                 .detailId(program.getDetailId())
                 .index(program.getIndex())
-                .code(new String(program.getCode().getBytes()))
+                .codeFanuc(!Objects.equals(program.getCodeFanuc().getOriginalFilename(), "") ? new String(program.getCodeFanuc().getBytes()): null)
+                .codeHaas(!Objects.equals(program.getCodeHaas().getOriginalFilename(), "") ? new String(program.getCodeHaas().getBytes()): null)
+                .codeH(!Objects.equals(program.getCodeH().getOriginalFilename(), "") ? new String(program.getCodeH().getBytes()) : null)
                 .type(program.getType())
                 .build());
         return "redirect:/home/programs/" + program.getDetailId();

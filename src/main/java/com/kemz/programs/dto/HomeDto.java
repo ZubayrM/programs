@@ -37,4 +37,7 @@ public class HomeDto {
 
     private String urlImg;
 
+    private Integer totalPages;
+    private Integer numberPage;
+
 }

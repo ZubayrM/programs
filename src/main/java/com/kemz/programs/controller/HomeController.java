@@ -2,10 +2,7 @@ package com.kemz.programs.controller;
 
 import com.kemz.programs.Repo.ImageRepo;
 import com.kemz.programs.dto.HomeDto;
-import com.kemz.programs.model.Image;
-import com.kemz.programs.model.Message;
-import com.kemz.programs.model.Program;
-import com.kemz.programs.model.Tool;
+import com.kemz.programs.model.*;
 import com.kemz.programs.service.DetailService;
 import com.kemz.programs.service.HomeService;
 import com.kemz.programs.service.Printer;
@@ -13,6 +10,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -40,11 +39,15 @@ public class HomeController {
     private final DetailService detailService;
     private final ImageRepo imageRepo;
 
+    private static final int DETAIL_SIZE = 14;
+
+    private static Integer totalPages;
+    private static Integer numberPage;
+
     @Autowired
     public HomeController(HomeService homeService, DetailService detailService, ImageRepo imageRepo) {
         this.detailService = detailService;
         this.imageRepo = imageRepo;
-        String[] a = new String[]{"1",""};
         this.homeService = homeService;
     }
 
@@ -55,11 +58,19 @@ public class HomeController {
 
     @ModelAttribute("home_dto")
     public HomeDto homeDto(){
+        Page<Detail> details = homeService.getDetails(PageRequest.of(0, DETAIL_SIZE));
+        totalPages = details.getTotalPages();
+        numberPage = details.getNumber();
+
+
+
         return HomeDto.builder()
-                .details(homeService.getAllDetail())
+                .details(details.getContent())
                 .programs(new ArrayList<Program>())
                 .tools(new ArrayList<Tool>())
                 .urlImg(URL_IMG)
+                .numberPage(numberPage)
+                .totalPages(totalPages)
                 .build();
     }
 
@@ -68,6 +79,23 @@ public class HomeController {
         homeDto.setAuth(principal != null);
         return "home";
     }
+
+
+    @GetMapping("/{value}")
+    public String home(@ModelAttribute("home_dto") HomeDto homeDto, @PathVariable Integer value){
+
+
+        Page<Detail> detailPage = homeService.getDetails(PageRequest.of(value < 0 ? 0 : value , DETAIL_SIZE));
+
+        if (value != detailPage.getTotalPages()) {
+            homeDto.setNumberPage(detailPage.getNumber());
+            homeDto.setTotalPages(detailPage.getTotalPages());
+            homeDto.setDetails(detailPage.getContent());
+        }
+        return "redirect:/home";
+    }
+
+
 
     @GetMapping("programs/{detail_id}")
     public String getPrograms(@PathVariable(name = "detail_id") Long detailId, @ModelAttribute(name = "home_dto") HomeDto homeDto){

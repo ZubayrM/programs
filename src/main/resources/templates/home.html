@@ -38,6 +38,12 @@
                     <a th:href="'home/programs/' + ${detail.getId()}" th:text="${detail.getName()}">name</a>
                 </div>
             </div>
+            <div>
+                <a th:href="'home/' + ${home_dto.getNumberPage() - 1}"><<</a>
+                <label th:text="${home_dto.getNumberPage() + 1} + ' из '"></label>
+                <label th:text="${home_dto.getTotalPages()}"></label>
+                <a th:href="'home/' + ${home_dto.getNumberPage() + 1}"> >> </a>
+            </div>
         </div>
 
     </div>
@@ -68,12 +74,12 @@
                             <div class="td-program-function-con">
                                 <div class="program-att">
                                     <div>
-                                        <label for="type-nc">NC</label>
-                                        <input type="radio" name="type_program" id="type-nc" value="nc" checked>
-                                        <label for="type-fanuc">FANUC</label>
-                                        <input type="radio" name="type_program" id="type-fanuc" value="fanuc">
-                                        <label for="type-h">H</label>
-                                        <input type="radio" name="type_program" id="type-h" value="h">
+                                        <label for="type-nc" th:if="${program.getCodeHaas() != null}">NC</label>
+                                        <input type="radio" name="type_program" id="type-nc" value="nc" checked th:if="${program.getCodeHaas() != null}">
+                                        <label for="type-fanuc" th:if="${program.getCodeFanuc() != null}">FANUC</label>
+                                        <input type="radio" name="type_program" id="type-fanuc" value="fanuc" checked th:if="${program.getCodeFanuc() != null}">
+                                        <label for="type-h" th:if="*{program.getCodeH() != null}">H</label>
+                                        <input type="radio" name="type_program" id="type-h" value="h" checked th:if="*{program.getCodeH() != null}">
                                     </div>
                                     <div>
                                         <label for="v-p-1">1v</label>

@@ -3,18 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Добавить программу</title>
+    <link rel='stylesheet' type='text/css' th:href='@{/styles/addProgramPageStyle.css}'>
 </head>
 <body>
 <form th:action="@{'/program/add'}" th:method="POST" th:object="${program}" enctype="multipart/form-data">
-    <input type="text" name="userId" th:value="*{userId}">
-    <input type="text" name="detailId" th:value="*{detailId}">
-    <input type="text" name="index" placeholder="номер операции">
-    <input type="file" name="code" th:value="*{code}" placeholder="программа">
-    <input type="radio" id="t" name="type" value="токарная" checked>
-    <label for="t">Токарная</label>
-    <input type="radio" id="f" name="type" value="фрезерная">
-    <label for="f">Фрезерная</label>
-    <input type="submit" value="Сохранить">
+
+    <div class="h2">
+        <h2>Добавление программы</h2>
+    </div>
+
+    <input type="text" name="userId" th:value="*{userId}" class="no-vis">
+    <input type="text" name="detailId" th:value="*{detailId}" class="no-vis">
+
+    <input type="text" name="index" placeholder="обозначение операции" class="f-col">
+
+
+    <div class="f-col file">
+        <label for="file-fanuc">FANUC</label>
+        <input id="file-fanuc" type="file" name="codeFanuc">
+    </div>
+
+
+    <div class="f-col file">
+        <label for="file-HAAS">HAAS</label>
+        <input id="file-HAAS" type="file" name="codeHaas">
+    </div>
+
+    <div class="f-col file">
+        <label for="file-h">H</label>
+        <input id="file-h" type="file" name="codeH">
+    </div>
+
+    <div class="f-col">
+        <input type="radio" id="t" name="type" value="токарная" checked>
+        <label for="t">Токарная</label>
+    </div>
+
+    <div class="f-col">
+        <input type="radio" id="f" name="type" value="фрезерная">
+        <label for="f">Фрезерная</label>
+    </div>
+
+    <div class="f-col">
+        <input type="radio" id="tf" name="type" value="токарно-фрезерная">
+        <label for="tf">Токарно-фрезерная</label>
+    </div>
+
+
+    <input type="submit" value="Сохранить" class="f-col">
 </form>
 
 </body>

@@ -19,7 +19,7 @@ public class MyDBaddModel implements CommandLineRunner {
         }
 
         for (int i = 1; i < 7; i++) {
-            template.execute("INSERT INTO Program(detail_id, index, code, type) values (1, '" + i + "', 'G0 G28 WO. XO.', 'токарная')");
+            template.execute("INSERT INTO Program(detail_id, index, code_haas, type) values (1, '" + i + "', 'G0 G28 WO. XO.', 'токарная')");
         }
 
         for (int i = 1; i < 20; i++) {

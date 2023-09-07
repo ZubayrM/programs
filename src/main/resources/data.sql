@@ -14,8 +14,8 @@ INSERT INTO Detail(id, cipher, name) VALUES (500, '120.8700.005', 'Гайка');
 INSERT INTO Detail(id, cipher, name) VALUES (600, '120.8700.006', 'Корпус');
 
 
-INSERT INTO Program(id, detail_id, index, code, type) values (100, 100, '010', 'G0 G28 WO. XO.', 'токарная');
-INSERT INTO Program(id, detail_id, index, code, type) values (200, 100, '020', 'G28 W0. U0.', 'фрезерная');
+INSERT INTO Program(id, detail_id, index, code_haas, type) values (100, 100, '010', 'G0 G28 WO. XO.', 'токарная');
+INSERT INTO Program(id, detail_id, index, code_fanuc, type) values (200, 100, '020', 'G28 W0. U0.', 'фрезерная');
 
 INSERT INTO Tool(id, name, cipher) values (100, 'Сверло', 'СТЦ 512 6х8х26х6 HF AlTin');
 INSERT INTO Tool(id, name, cipher) values (200, 'Сверло', 'СТЦ 512 8х8х26х8 HF AlTin');
