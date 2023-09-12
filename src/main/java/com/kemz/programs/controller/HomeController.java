@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
@@ -39,10 +40,12 @@ public class HomeController {
     private final DetailService detailService;
     private final ImageRepo imageRepo;
 
-    private static final int DETAIL_SIZE = 14;
+    private static final int DETAIL_SIZE = 15;
 
     private static Integer totalPages;
     private static Integer numberPage;
+
+    private String search = null;
 
     @Autowired
     public HomeController(HomeService homeService, DetailService detailService, ImageRepo imageRepo) {
@@ -84,9 +87,10 @@ public class HomeController {
     @GetMapping("/{value}")
     public String home(@ModelAttribute("home_dto") HomeDto homeDto, @PathVariable Integer value){
 
+        if (search != null) return search(search, homeDto, value);
+
 
         Page<Detail> detailPage = homeService.getDetails(PageRequest.of(value < 0 ? 0 : value , DETAIL_SIZE));
-
         if (value != detailPage.getTotalPages()) {
             homeDto.setNumberPage(detailPage.getNumber());
             homeDto.setTotalPages(detailPage.getTotalPages());
@@ -113,7 +117,7 @@ public class HomeController {
         try {
             homeDto.setImgByte(imageRepo.findByProgramId(programId).orElseThrow().getImg());
         } catch (Exception e){
-
+            log.info(e.getMessage());
         }
 
         return "redirect:/home";
@@ -128,13 +132,27 @@ public class HomeController {
 
     @GetMapping(value = "down/program/{program_id}")
     @ResponseBody
-    public String downloadProgram(@PathVariable(name = "program_id") Long programId) throws IOException {
-        return homeService.getProgram(programId);
+    public String downloadProgram(@PathVariable(name = "program_id") Long programId, @ModelAttribute("home_dto") HomeDto homeDto, @RequestParam("type_program") String  type) throws IOException {
+        Program program = homeService.getProgram(programId);
+
+        switch (type) {
+            case "fanuc": return program.getCodeFanuc();
+            case "nc": return program.getCodeHaas();
+            case "h": return program.getCodeH();
+            default: return "";
+        }
     }
 
     @PostMapping("/search")
-    public String search(@RequestParam("text") String text, @ModelAttribute("home_dto") HomeDto homeDto ){
-        homeDto.setDetails(homeService.getDetailBySearch(text));
+    public String search(@RequestParam("text") String text, @ModelAttribute("home_dto") HomeDto homeDto, Integer value ){
+        search = text;
+        if (value==null || value < 0) value= 0;
+
+        Page<Detail> detailBySearch = homeService.getDetailBySearch(text, PageRequest.of(value, DETAIL_SIZE));
+        if (value >= detailBySearch.getTotalPages()) return "redirect:/home";
+        homeDto.setDetails(detailBySearch.getContent());
+        homeDto.setTotalPages(detailBySearch.getTotalPages());
+        homeDto.setNumberPage(detailBySearch.getNumber());
         return "redirect:/home";
     }
 

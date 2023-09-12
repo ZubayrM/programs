@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -47,12 +48,12 @@ public class HomeService {
         return tools;
     }
 
-    public String getProgram(Long programId) {
-        return programRepo.findById(programId).orElse(new Program()).getCodeHaas();
+    public Program getProgram(Long programId) {
+        return programRepo.findById(programId).orElse(new Program());
     }
 
-    public List<Detail> getDetailBySearch(String text) {
-        return detailRepo.findByNameContainingIgnoreCaseOrCipherContainingIgnoreCase(text, text);
+    public Page<Detail> getDetailBySearch(String text, Pageable pageable) {
+        return detailRepo.findByNameContainingIgnoreCaseOrCipherContainingIgnoreCase(text, text, pageable);
     }
 
     public Page<Detail> getDetails(PageRequest of) {

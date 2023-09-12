@@ -40,4 +40,6 @@ public class HomeDto {
     private Integer totalPages;
     private Integer numberPage;
 
+    private String programActiveType;
+
 }
