@@ -44,3 +44,19 @@ form{
 label{
     padding-right: 5px;
 }
+
+.btn{
+    background-color: #0a588d;
+    color: white;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.addFile{
+    background-color: #0a588d;
+    color: white;
+}
+
+.input-text{
+    font-size: 18px;
+}

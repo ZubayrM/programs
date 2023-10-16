@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Авторизация</title>
+    <link rel='stylesheet' type='text/css' media='screen' th:href='@{styles/authPage.css}'>
 </head>
 <body>
-<form th:action="@{/auth}" th:method="POST">
-    <input type="text" name="name" placeholder="логин">
-    <input type="password" name="pass" placeholder="пароль">
-    <input type="submit" value="войти">
-</form>
+<div class="block">
+    <form th:action="@{/auth}" th:method="POST">
+        <label class="label">Авторизация</label>
+        <input type="text" name="name" placeholder="логин" class="p">
+        <input type="password" name="pass" placeholder="пароль" class="p">
+        <input type="submit" value="войти" class="p btn">
+    </form>
+</div>
+
 </body>
 </html>

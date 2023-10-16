@@ -7,9 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DetailRepo extends JpaRepository<Detail, Long> {
 
     Page<Detail> findByNameContainingIgnoreCaseOrCipherContainingIgnoreCase(String s1, String s2, Pageable p);
+
+    Optional<Detail> findByCipher(String cipher);
 }

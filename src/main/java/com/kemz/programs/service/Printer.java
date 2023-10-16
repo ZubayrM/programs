@@ -1,19 +1,23 @@
 package com.kemz.programs.service;
 
-import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Node;
+import org.xhtmlrenderer.layout.SharedContext;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.print.*;
-import javax.print.attribute.*;
+import javax.print.attribute.DocAttributeSet;
+import javax.print.attribute.HashDocAttributeSet;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.MediaSizeName;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Map;
 
 @Slf4j
@@ -48,7 +52,9 @@ public abstract class Printer {
 
     public static void printTools(String fileName, Map<String, Object> data){
         Document document;
-        try {
+        File file = new File("html.pdf");
+        try (FileOutputStream outputStream = new FileOutputStream(file);) {
+
             document = Jsoup.parse(new File(PATH + fileName));
             Element table = document.getElementById("table");
 
@@ -58,18 +64,25 @@ public abstract class Printer {
             });
             log.info(document.outerHtml());
 
+            ITextRenderer renderer = new ITextRenderer();
+            SharedContext context = renderer.getSharedContext();
+            context.setPrint(true);
+            context.setInteractive(false);
+            renderer.setDocumentFromString(document.outerHtml());
+            renderer.layout();
+            renderer.createPDF(outputStream);
 
-            PdfRendererBuilder builder = new PdfRendererBuilder();
-
-
-
-            docFlavor = DocFlavor.STRING.TEXT_HTML;
-            doc = new SimpleDoc(document.outerHtml(), docFlavor, docAttributeSet);
+            docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+            log.info(String.format("Тип печати %s ", docFlavor.getMimeType()));
+            doc = new SimpleDoc(new FileInputStream(file), docFlavor, docAttributeSet);
 
             printJob.print(doc, printRequestAttribute);
 
         } catch (Exception e){
             log.info("Тут вместо печати инструментов " + e.getMessage());
+        }
+        finally {
+            log.info("Мы сделали все что могли... осталось ждать pdf");
         }
 
 

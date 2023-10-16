@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
-    <title>Добавить деталь</title>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Добавить детали</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' th:href='@{styles/main.css}'>
 </head>
 <body>
-<form th:action="@{'/home/addDetail'}" th:method="POST">
-    <input type="text" name="cipher" placeholder="обозначение">
-    <input type="text" name="name" placeholder="наименование">
-    <input type="submit" value="Сохранить">
-</form>
+<div class="conteiner">
+    <form th:action="@{'/home/addDetail'}" th:method="POST">
+        <input type="text" name="cipher" placeholder="обозначение" class="p">
+        <input type="text" name="name" placeholder="наименование" class="p">
+        <input type="submit" value="Сохранить" class="p btn">
+    </form>
+</div>
+
 </body>
 </html>

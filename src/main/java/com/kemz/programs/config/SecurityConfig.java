@@ -41,7 +41,9 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and().exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/home");
                 //.and()
                 //.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

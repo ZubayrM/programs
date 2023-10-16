@@ -15,23 +15,23 @@
     <input type="text" name="userId" th:value="*{userId}" class="no-vis">
     <input type="text" name="detailId" th:value="*{detailId}" class="no-vis">
 
-    <input type="text" name="index" placeholder="обозначение операции" class="f-col">
+    <input type="text" name="index" placeholder="обозначение операции" class="f-col input-text">
 
 
     <div class="f-col file">
         <label for="file-fanuc">FANUC</label>
-        <input id="file-fanuc" type="file" name="codeFanuc">
+        <input id="file-fanuc" type="file" name="codeFanuc" class="addFile">
     </div>
 
 
     <div class="f-col file">
         <label for="file-HAAS">HAAS</label>
-        <input id="file-HAAS" type="file" name="codeHaas">
+        <input id="file-HAAS" type="file" name="codeHaas" class="addFile">
     </div>
 
     <div class="f-col file">
         <label for="file-h">H</label>
-        <input id="file-h" type="file" name="codeH">
+        <input id="file-h" type="file" name="codeH" class="addFile">
     </div>
 
     <div class="f-col">
@@ -50,7 +50,7 @@
     </div>
 
 
-    <input type="submit" value="Сохранить" class="f-col">
+    <input type="submit" value="Сохранить" class="f-col btn">
 </form>
 
 </body>

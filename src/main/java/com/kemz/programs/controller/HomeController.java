@@ -10,7 +10,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
@@ -22,7 +21,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -60,7 +58,7 @@ public class HomeController {
     }
 
     @ModelAttribute("home_dto")
-    public HomeDto homeDto(){
+    public HomeDto homeDto() {
         Page<Detail> details = homeService.getDetails(PageRequest.of(0, DETAIL_SIZE));
         totalPages = details.getTotalPages();
         numberPage = details.getNumber();
@@ -71,7 +69,7 @@ public class HomeController {
                 .details(details.getContent())
                 .programs(new ArrayList<Program>())
                 .tools(new ArrayList<Tool>())
-                .urlImg(URL_IMG)
+                .urlImg(null)
                 .numberPage(numberPage)
                 .totalPages(totalPages)
                 .build();
@@ -103,9 +101,12 @@ public class HomeController {
 
     @GetMapping("programs/{detail_id}")
     public String getPrograms(@PathVariable(name = "detail_id") Long detailId, @ModelAttribute(name = "home_dto") HomeDto homeDto){
+        homeDto.setUrlImg(null);
         homeDto.setDetailActive(detailId);
         homeDto.setPrograms(homeService.getPrograms(detailId));
         homeDto.setTools(new ArrayList<>());
+        homeDto.setProgramActive(null);
+        homeDto.setUrlImg(null);
 
         return "redirect:/home";
     }
@@ -132,10 +133,11 @@ public class HomeController {
 
     @GetMapping(value = "down/program/{program_id}")
     @ResponseBody
-    public String downloadProgram(@PathVariable(name = "program_id") Long programId, @ModelAttribute("home_dto") HomeDto homeDto, @RequestParam("type_program") String  type) throws IOException {
-        Program program = homeService.getProgram(programId);
+    public String downloadProgram(@PathVariable(name = "program_id") String programId, @ModelAttribute("home_dto") HomeDto homeDto) throws IOException {
+        String[] strings = programId.split("&");
+        Program program = homeService.getProgram(Long.valueOf(strings[0]));
 
-        switch (type) {
+        switch (strings[1]) {
             case "fanuc": return program.getCodeFanuc();
             case "nc": return program.getCodeHaas();
             case "h": return program.getCodeH();
@@ -160,9 +162,8 @@ public class HomeController {
     @PostMapping("addDetail")
     public String addDetail(String cipher, String name, @ModelAttribute("home_dto") HomeDto homeDto){
         Long detailId = detailService.add(cipher, name);
-        log.info(String.format("add detail: id- %d name- %s cipher- %s", detailId, name, cipher));
         homeDto.setDetails(homeService.getAllDetail());
-        return "redirect:/home/programs/" + detailId;
+        return "redirect:/home/programs/" + (detailId != 0L ? detailId : "");
     }
 
     @PostMapping("/addImg")

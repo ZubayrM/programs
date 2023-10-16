@@ -7,218 +7,249 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' th:href='@{styles/main.css}'>
 </head>
-<body style="margin: 0px;">
-<a href="auth">Вход</a>
-<div style="max-width: 1980px;height: 75px;border:1px solid #000; background-color:rgb(17, 59, 122);"><p align="center">
-    <font size="6" color="#ffffff">Архив управляющих программ</font></p></div>
+<body>
+<!--<a href="auth">Вход</a>-->
 
-<div id="left">
-    <form action="home/search" th:method="POST">
-        <p>
-            <input type="search" name="text" placeholder="Поиск по сайту">
-            <input type="submit" value="Найти">
-        </p>
-    </form>
-</div>
 
 <div class="conteiner">
 
-    <div class="table table-detail">
-<!--        <span class="detali span-h2">Детали</span>-->
-        <a href="detail/addPage" class="btn btnAddDetailPage" th:if="${home_dto.auth}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="16" fill="currentColor"
-                 class="bi bi-node-plus-fill" viewBox="0 0 13 13">
-                <path d="M11 13a5 5 0 1 0-4.975-5.5H4A1.5 1.5 0 0 0 2.5 6h-1A1.5 1.5 0 0 0 0 7.5v1A1.5 1.5 0 0 0 1.5 10h1A1.5 1.5 0 0 0 4 8.5h2.025A5 5 0 0 0 11 13zm.5-7.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2a.5.5 0 0 1 1 0z"/>
-            </svg>
-        </a>
-        <div class="detail-list">
-            <div class="tr-detail"
-                 th:each="detail : ${home_dto.details}"
-                 th:classappend="${detail.getId() == home_dto.getDetailActive()}? ${'active-detail'} : ${'not'} ">
-                <div class="td">
-                    <a th:href="'home/programs/' + ${detail.getId()}" th:text="${detail.getCipher()}">chipher</a>
-                    <a th:href="'home/programs/' + ${detail.getId()}" th:text="${detail.getName()}">name</a>
-                </div>
+    <div class="heder">
+        <div class="h1-bloc">
+            <div th:if="${!home_dto.auth}">
+                <a href="/auth" class="btn-auth">
+                    <label>войти</label>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
+                        <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+                        <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
+                    </svg>
+                </a>
+            </div>
+            <div th:if="${home_dto.auth}">
+                <a th:href="@{'/logout'}" class="btn-auth">
+                    <label>выйти</label>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
+                        <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+                        <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
+                    </svg>
+                </a>
             </div>
             <div>
-                <a th:href="'home/' + ${home_dto.getNumberPage() - 1}"><<</a>
-                <label th:text="${home_dto.getNumberPage() + 1} + ' из '"></label>
-                <label th:text="${home_dto.getTotalPages()}"></label>
-                <a th:href="'home/' + ${home_dto.getNumberPage() + 1}"> >> </a>
+                <h1 class="h1">Архив управляющих программ</h1>
+            </div>
+            <div class="h1-3">
+                <form action="home/search" th:method="POST">
+                    <p>
+                        <input type="search" name="text" placeholder="Поиск по сайту">
+                        <input type="submit" value="Найти">
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="body">
+        <div class="table table-detail">
+
+
+            <div class="detail-list">
+                <div class="tr-detail tr-detail-h">
+                    <div class="td">
+                        <span>
+                            Список изделий
+                        </span>
+                        <a href="detail/addPage"  th:if="${home_dto.auth}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="tr-detail"
+                     th:each="detail : ${home_dto.details}"
+                     th:classappend="${detail.getId() == home_dto.getDetailActive()}? ${'active-detail'} : ${'not'} ">
+                    <div class="td">
+                        <a th:href="'home/programs/' + ${detail.getId()}" th:text="${detail.getCipher()}">chipher</a>
+                        <span>&nbsp</span>
+                        <a th:href="'home/programs/' + ${detail.getId()}" th:text="${detail.getName()}">name</a>
+                    </div>
+                </div>
+                <div>
+                    <a th:href="'home/' + ${home_dto.getNumberPage() - 1}"><<</a>
+                    <label th:text="${home_dto.getNumberPage() + 1} + ' из '"></label>
+                    <label th:text="${home_dto.getTotalPages()}"></label>
+                    <a th:href="'home/' + ${home_dto.getNumberPage() + 1}"> >> </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="table table-program">
+            <div class="programs" th:if="${home_dto.programs.size > 0 || home_dto.auth}">
+                <div class="list-programs" >
+                    <div class="tr-program">
+                        <div class="td-program">
+                            <div class="td-program-child">
+                                <div class="td-program-child-h">
+                                    <span>Список управляющих программ</span>
+                                    <a href="home/addProgramPage" class="btn btnAddProgramPage" th:if="${home_dto.auth}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="16" fill="currentColor"
+                                             class="bi bi-node-plus-fill" viewBox="0 0 13 13">
+                                            <path d="M11 13a5 5 0 1 0-4.975-5.5H4A1.5 1.5 0 0 0 2.5 6h-1A1.5 1.5 0 0 0 0 7.5v1A1.5 1.5 0 0 0 1.5 10h1A1.5 1.5 0 0 0 4 8.5h2.025A5 5 0 0 0 11 13zm.5-7.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2a.5.5 0 0 1 1 0z"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tr-program"
+                         th:each="program : ${home_dto.programs}">
+                        <div class="td-program">
+                            <div class="td-program-child"
+                                 th:classappend="${program.getId() == home_dto.getProgramActive()}? ${'program-active'}: ${'not'}">
+                                <div class="td-program-child-e"
+                                     th:classappend="${program.getId() == home_dto.getProgramActive()}? ${'program-active'}: ${'not'}">
+                                    <div class="td-program-a">
+                                        <a th:href="${'home/tools/' + program.getId()}" th:text="${program.getIndex()}">имя
+                                            программы</a>
+                                    </div>
+                                    <div class="prg-spam">
+                                        <span class="type-span" th:text="${program.type}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="td-program-function" th:if="${program.getId() == home_dto.getProgramActive()}">
+                                <div class="td-program-function-con">
+                                    <div class="program-att">
+                                        <div class="att-p" th:if="${program.getCodeHaas() != null}" >
+                                            <div>
+                                                <label for="nc-prg">NC</label>
+                                            </div>
+                                            <div class="btn-down-prog">
+                                                <a id="nc-prg" th:attr="download=${program.getIndex()} + '.nc'"
+                                                   th:href="'home/down/program/' + ${program.getId()} + '&nc'">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                                         fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="att-p" th:if="${program.getCodeFanuc() != null}">
+                                            <div>
+                                                <label for="fanuc-prg">FANUC</label>
+                                            </div>
+                                            <div class="btn-down-prog">
+                                                <a id="fanuc-prg" th:attr="download=${program.getIndex()}"
+                                                   th:href="'home/down/program/' + ${program.getId()} + '&fanuc'">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                                         fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="att-p" th:if="*{program.getCodeH() != null}">
+                                            <div>
+                                                <label for="h-prg">H</label>
+                                            </div>
+                                            <div class="btn-down-prog">
+                                                <a id="h-prg" th:attr="download=${program.getIndex()} + '.h'"
+                                                   th:href="'home/down/program/' + ${program.getId()} + '&h'">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                                         fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-    </div>
+        <div class="table table-info">
+            <div class="imgPage" th:if="${home_dto.getProgramActive() ne null}">
+                <a href="/home/addImagePage">add img</a>
+                <div th:if="${home_dto.getUrlImg() != null}">
+                    <div class="img-box" >
+                        <span class="span-h2">Эскиз</span>
 
-    <div class="table table-program2tool">
-        <div class="programs" th:if="${home_dto.programs.size > 0 || home_dto.auth}">
-            <span class="program span-h2">Программы</span>
-            <a href="home/addProgramPage" class="btn btnAddProgramPage" th:if="${home_dto.auth}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="16" fill="currentColor"
-                     class="bi bi-node-plus-fill" viewBox="0 0 13 13">
-                    <path d="M11 13a5 5 0 1 0-4.975-5.5H4A1.5 1.5 0 0 0 2.5 6h-1A1.5 1.5 0 0 0 0 7.5v1A1.5 1.5 0 0 0 1.5 10h1A1.5 1.5 0 0 0 4 8.5h2.025A5 5 0 0 0 11 13zm.5-7.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2a.5.5 0 0 1 1 0z"/>
-                </svg>
-            </a>
-            <div class="list-programs">
-                <div class="tr-program"
-                     th:each="program : ${home_dto.programs}">
-                    <div class="td-program">
-                        <div class="td-program-child"
-                             th:classappend="${program.getId() == home_dto.getProgramActive()}? ${'program-active'}: ${'not'}">
-                            <div class="td-program-child-e"
-                                 th:classappend="${program.getId() == home_dto.getProgramActive()}? ${'program-active'}: ${'not'}">
-                                <div class="td-program-a">
-                                    <a th:href="${'home/tools/' + program.getId()}" th:text="${program.getIndex()}">имя
-                                        программы</a>
-                                </div>
-                                <div class="prg-spam">
-                                    <span class="type-span" th:text="${program.type}"></span>
-                                </div>
-                            </div>
+                        <a href="home/addImagePage" class="btn btnAddImg" th:if="${home_dto.auth}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="18" fill="currentColor"
+                                 class="bi bi-node-plus-fill" viewBox="0 0 13 13">
+                                <path d="M11 13a5 5 0 1 0-4.975-5.5H4A1.5 1.5 0 0 0 2.5 6h-1A1.5 1.5 0 0 0 0 7.5v1A1.5 1.5 0 0 0 1.5 10h1A1.5 1.5 0 0 0 4 8.5h2.025A5 5 0 0 0 11 13zm.5-7.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2a.5.5 0 0 1 1 0z"/>
+                            </svg>
+                        </a>
+
+                    </div>
+                    <img width="100%" th:src="${home_dto.getUrlImg() + '/' + home_dto.getProgramActive()}" alt="no img">
+                    <p>
+                        <a href="home/print" class="btn-print">
+                            <span>Печать</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor"
+                                 class="bi bi-printer-fill" viewBox="0 0 14 14">
+                                <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
+                                <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+                            </svg>
+                        </a>
+
+                    </p>
+                </div>
+                <div class="no-img" th:if="${home_dto.getUrlImg() == null}">
+                    НЕТ ИЗОБРАЖЕНИЯ НА УСТАНОВКУ
+                </div>
+            </div>
+
+
+            <div class="tools" th:if="${home_dto.getProgramActive ne null}">
+                <p class="h-tools">
+                    <span class="span-h2">Инструменты</span>
+                    <a th:href="@{'home/printTools'}" class="btn-print">
+                        <span class="type-span">Печать</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                             class="bi bi-printer-fill" viewBox="0 0 16 14">
+                            <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
+                            <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+                        </svg>
+                    </a>
+                </p>
+                <a href="/tool/addPage" class="btn btnAddToolPage" th:if="${home_dto.auth}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="16" fill="currentColor"
+                         class="bi bi-node-plus-fill" viewBox="0 0 13 13">
+                        <path d="M11 13a5 5 0 1 0-4.975-5.5H4A1.5 1.5 0 0 0 2.5 6h-1A1.5 1.5 0 0 0 0 7.5v1A1.5 1.5 0 0 0 1.5 10h1A1.5 1.5 0 0 0 4 8.5h2.025A5 5 0 0 0 11 13zm.5-7.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2a.5.5 0 0 1 1 0z"/>
+                    </svg>
+                </a>
+                <div th:if="${home_dto.tools.size > 0}" class="tools-block">
+                    <div class="tools-list" th:if="${home_dto.tools.size > 0}">
+                        <div class="tr-tool" th:each="tool : ${home_dto.tools}">
+                            <label th:text="${tool.getName()}">имя инструмента</label>
+                            <label th:text="${tool.getCipher()}">имя инструмента</label>
                         </div>
-                        <div class="td-program-function" th:if="${program.getId() == home_dto.getProgramActive()}">
-                            <div class="td-program-function-con">
-                                <div class="program-att">
-                                    <div class="att-p">
-                                        <div>
-                                            <label for="nc-prg">NC</label>
-                                        </div>
-                                        <div class="btn-down-prog">
-                                            <a id="nc-prg" th:attr="download=${program.getIndex()} + '.nc'"
-                                               th:href="'home/down/program/' + ${program.getId()}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                                                     fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                                </svg>
-                                            </a>
-                                        </div>
-
-                                        <!--                                            <label for="type-nc" th:if="${program.getCodeHaas() != null}">NC</label>-->
-                                        <!--                                            <input type="radio" name="type_program" id="type-nc" value="nc" checked-->
-                                        <!--                                                   th:if="${program.getCodeHaas() != null}">-->
-                                        <!--                                            <label for="type-fanuc"-->
-                                        <!--                                                   th:if="${program.getCodeFanuc() != null}">FANUC</label>-->
-                                        <!--                                            <input type="radio" name="type_program" id="type-fanuc" value="fanuc"-->
-                                        <!--                                                   checked th:if="${program.getCodeFanuc() != null}">-->
-                                        <!--                                            <label for="type-h" th:if="*{program.getCodeH() != null}">H</label>-->
-                                        <!--                                            <input type="radio" name="type_program" id="type-h" value="h" checked-->
-                                        <!--                                                   th:if="*{program.getCodeH() != null}">-->
-                                    </div>
-                                    <div class="att-p">
-                                        <div>
-                                            <label for="fanuc-prg">FANUC</label>
-                                        </div>
-                                        <div class="btn-down-prog">
-                                            <a id="fanuc-prg" th:attr="download=${program.getIndex()} + '.nc'"
-                                               th:href="'home/down/program/' + ${program.getId()}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                                                     fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="att-p">
-                                        <div>
-                                            <label for="h-prg">H</label>
-                                        </div>
-                                        <div class="btn-down-prog">
-                                            <a id="h-prg" th:attr="download=${program.getIndex()} + '.nc'"
-                                               th:href="'home/down/program/' + ${program.getId()}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                                                     fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-<!--                                <div class="td-program-btn">-->
-<!--                                    <div class="btn-down-prog">-->
-<!--                                        <a th:attr="download=${program.getIndex()} + '.nc'"-->
-<!--                                           th:href="'home/down/program/' + ${program.getId()}">-->
-<!--                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eyeglasses" viewBox="0 0 16 16">-->
-<!--                                                <path d="M4 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm2.625.547a3 3 0 0 0-5.584.953H.5a.5.5 0 0 0 0 1h.541A3 3 0 0 0 7 8a1 1 0 0 1 2 0 3 3 0 0 0 5.959.5h.541a.5.5 0 0 0 0-1h-.541a3 3 0 0 0-5.584-.953A1.993 1.993 0 0 0 8 6c-.532 0-1.016.208-1.375.547zM14 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>-->
-<!--                                            </svg>-->
-<!--                                        </a>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-                            </div>
-
-                        </div>
-
                     </div>
 
 
+
+
+
                 </div>
-            </div>
-
-        </div>
-
-        <div class="tools" th:if="${home_dto.tools.size > 0 || home_dto.auth}">
-            <span class="tool span-h2">Инструменты</span>
-            <a href="/tool/addPage" class="btn btnAddToolPage" th:if="${home_dto.auth}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="16" fill="currentColor"
-                     class="bi bi-node-plus-fill" viewBox="0 0 13 13">
-                    <path d="M11 13a5 5 0 1 0-4.975-5.5H4A1.5 1.5 0 0 0 2.5 6h-1A1.5 1.5 0 0 0 0 7.5v1A1.5 1.5 0 0 0 1.5 10h1A1.5 1.5 0 0 0 4 8.5h2.025A5 5 0 0 0 11 13zm.5-7.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2a.5.5 0 0 1 1 0z"/>
-                </svg>
-            </a>
-            <div class="tools-list">
-                <div class="tr-tool" th:each="tool : ${home_dto.tools}">
-                    <label th:text="${tool.getName()}">имя инструмента</label>
-                    <label th:text="${tool.getCipher()}">имя инструмента</label>
+                <div th:if="${home_dto.tools.size == 0}" class="tools-msg">
+                    <p>Список пуст</p>
                 </div>
-            </div>
 
-            <div>
-                <a th:href="@{'home/printTools'}" class="btn-print">
-                    <span class="type-span">Печать</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
-                         class="bi bi-printer-fill" viewBox="0 0 14 14">
-                        <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
-                        <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-                    </svg>
-                </a>
 
             </div>
         </div>
-
     </div>
 
-
-    <div class="table table-info">
-        <div>
-            <span class="span-h2">Эскиз</span>
-
-            <a href="home/addImagePage" class="btn btnAddImg" th:if="${home_dto.auth}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="18" fill="currentColor"
-                     class="bi bi-node-plus-fill" viewBox="0 0 13 13">
-                    <path d="M11 13a5 5 0 1 0-4.975-5.5H4A1.5 1.5 0 0 0 2.5 6h-1A1.5 1.5 0 0 0 0 7.5v1A1.5 1.5 0 0 0 1.5 10h1A1.5 1.5 0 0 0 4 8.5h2.025A5 5 0 0 0 11 13zm.5-7.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2a.5.5 0 0 1 1 0z"/>
-                </svg>
-            </a>
-
-        </div>
-
-        <div class="imgPage">
-            <img width="100%" th:src="${home_dto.getUrlImg() + '/' + home_dto.getProgramActive()}" alt="no img">
-            <p>
-                <a href="home/print" class="btn-print">
-                    <span>Печать</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor"
-                         class="bi bi-printer-fill" viewBox="0 0 14 14">
-                        <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
-                        <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-                    </svg>
-                </a>
-
-            </p>
-        </div>
-
-
-    </div>
 
 </div>
 
