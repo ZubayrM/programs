@@ -9,8 +9,6 @@
 </head>
 <body>
 <!--<a href="auth">Вход</a>-->
-
-
 <div class="conteiner">
 
     <div class="heder">
@@ -178,38 +176,34 @@
 
         <div class="table table-info">
             <div class="imgPage" th:if="${home_dto.getProgramActive() ne null}">
-                <a href="/home/addImagePage">add img</a>
+                <div>
+                    <span class="span-h2">Эскиз</span>
+                    <a href="home/addImagePage" class="btn btnAddImg" th:if="${home_dto.auth}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="18" fill="currentColor"
+                             class="bi bi-node-plus-fill" viewBox="0 0 13 13">
+                            <path d="M11 13a5 5 0 1 0-4.975-5.5H4A1.5 1.5 0 0 0 2.5 6h-1A1.5 1.5 0 0 0 0 7.5v1A1.5 1.5 0 0 0 1.5 10h1A1.5 1.5 0 0 0 4 8.5h2.025A5 5 0 0 0 11 13zm.5-7.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2a.5.5 0 0 1 1 0z"/>
+                        </svg>
+                    </a>
+                </div>
                 <div th:if="${home_dto.getUrlImg() != null}">
                     <div class="img-box" >
-                        <span class="span-h2">Эскиз</span>
-
-                        <a href="home/addImagePage" class="btn btnAddImg" th:if="${home_dto.auth}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="18" fill="currentColor"
-                                 class="bi bi-node-plus-fill" viewBox="0 0 13 13">
-                                <path d="M11 13a5 5 0 1 0-4.975-5.5H4A1.5 1.5 0 0 0 2.5 6h-1A1.5 1.5 0 0 0 0 7.5v1A1.5 1.5 0 0 0 1.5 10h1A1.5 1.5 0 0 0 4 8.5h2.025A5 5 0 0 0 11 13zm.5-7.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2a.5.5 0 0 1 1 0z"/>
-                            </svg>
-                        </a>
-
+                        <img width="auto" height="350" th:src="${home_dto.getUrlImg() + '/' + home_dto.getProgramActive()}" alt="no img">
+                        <p>
+                            <a href="home/print" class="btn-print">
+                                <span>Печать</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor"
+                                     class="bi bi-printer-fill" viewBox="0 0 14 14">
+                                    <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
+                                    <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+                                </svg>
+                            </a>
+                        </p>
                     </div>
-                    <img width="100%" th:src="${home_dto.getUrlImg() + '/' + home_dto.getProgramActive()}" alt="no img">
-                    <p>
-                        <a href="home/print" class="btn-print">
-                            <span>Печать</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor"
-                                 class="bi bi-printer-fill" viewBox="0 0 14 14">
-                                <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
-                                <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-                            </svg>
-                        </a>
-
-                    </p>
-                </div>
-                <div class="no-img" th:if="${home_dto.getUrlImg() == null}">
-                    НЕТ ИЗОБРАЖЕНИЯ НА УСТАНОВКУ
+                    <div class="no-img" th:if="${home_dto.getUrlImg() == null}">
+                        НЕТ ИЗОБРАЖЕНИЯ НА УСТАНОВКУ
+                    </div>
                 </div>
             </div>
-
-
             <div class="tools" th:if="${home_dto.getProgramActive ne null}">
                 <p class="h-tools">
                     <span class="span-h2">Инструменты</span>
@@ -235,21 +229,13 @@
                             <label th:text="${tool.getCipher()}">имя инструмента</label>
                         </div>
                     </div>
-
-
-
-
-
                 </div>
                 <div th:if="${home_dto.tools.size == 0}" class="tools-msg">
                     <p>Список пуст</p>
                 </div>
-
-
             </div>
         </div>
     </div>
-
 
 </div>
 

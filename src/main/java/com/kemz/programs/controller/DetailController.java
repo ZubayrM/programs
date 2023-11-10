@@ -20,7 +20,7 @@ public class DetailController {
 
     @GetMapping("addPage")
     public String addPage(){
-        return "addDetailP";
+        return "addDetailPage";
     }
 
 

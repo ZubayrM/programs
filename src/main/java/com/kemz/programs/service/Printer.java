@@ -84,10 +84,5 @@ public abstract class Printer {
         finally {
             log.info("Мы сделали все что могли... осталось ждать pdf");
         }
-
-
-
-
     }
-
 }

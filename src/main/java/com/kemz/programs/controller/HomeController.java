@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 @Log4j2
@@ -168,12 +169,15 @@ public class HomeController {
 
     @PostMapping("/addImg")
     public String addImg(@RequestParam("img") MultipartFile file, @ModelAttribute("home_dto") HomeDto homeDto) throws IOException {
+        Optional<Image> programId = imageRepo.findByProgramId(homeDto.getProgramActive());
+        programId.ifPresent(imageRepo::delete);
         Image image = imageRepo.save(Image.builder()
                 .img(file.getBytes())
                 .type(file.getContentType())
                 .programId(homeDto.getProgramActive())
                 .build());
         homeDto.setImgByte(image.getImg());
+        homeDto.setUrlImg(URL_IMG);
         return "redirect:/home";
     }
 
